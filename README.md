@@ -2,7 +2,7 @@
 
 ## 📄 Project Overview
 
-This project contains a collection of SQL queries that demonstrate analytical and reporting skills using the **Northwind sample database**.  
+This project contains a collection of SQL/T-SQL queries that demonstrate analytical and reporting skills using the **Northwind sample database**.  
 
 The goal is to showcase the ability to:
 - write complex SQL queries,

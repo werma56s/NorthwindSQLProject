@@ -4,6 +4,11 @@
 
 This project contains a collection of SQL/T-SQL queries that demonstrate analytical and reporting skills using the **Northwind sample database**.  
 
+- **SQL** – Standard SQL queries that work across most relational databases.
+  - Examples: `SELECT`, `JOIN`, `GROUP BY`, `COUNT`, `AVG`
+- **T-SQL** – Microsoft SQL Server specific extensions, including window functions and formatting functions.
+  - Examples: `LAG() OVER(...)`, `FORMAT()`, `ROUND()`, `TOP`
+
 The goal is to showcase the ability to:
 - write complex SQL queries,
 - use aggregation (`COUNT`, `SUM`, `AVG`),
@@ -42,7 +47,7 @@ Scripts used to create and load the database:
 
 ## 🔧 Queries Included
 
-`sql_practice_project.sql`:
+- `sql_practice_project.sql`:
 1. **Count Orders per Customer** – Show total orders for each customer.  
 2. **Count Products per Supplier** – Show how many products each supplier has.  
 3. **Average Product Price per Category** – Compute average unit price per category.  
@@ -51,7 +56,8 @@ Scripts used to create and load the database:
 6. **Top Customers by Orders** – Show customers with the highest number of orders.  
 7. **Suppliers with Expensive Products** – Identify suppliers providing products above average price.  
 8. **Orders Exceeding 1000 Total Value** – Find high-value orders.  
-`sql_trends_and_prices.sql`:
+
+- `sql_trends_and_prices.sql`:
 9. **Orders YoY Comparison** – Year-over-year growth in orders.  
 10. **Orders MoM Comparison** – Month-over-month growth in orders.  
 11. **Average Price Changes per Category (YoY)** – Real and supplier prices per category with YoY percentage.  

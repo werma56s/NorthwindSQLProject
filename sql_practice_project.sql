@@ -3,7 +3,47 @@
 -- Project: Sales Data Analysis (Northwind)
 -- =====================================================
 
--- 1. Produkty, które nigdy nie zostały zamówione
+-- 1. Policz liczbę zamówień dla każdego klienta
+-- EN: Count the number of orders for each customer
+select 
+    o.CustomerID, 
+    c.CompanyName, 
+    count(o.OrderID) as CountOfOrders
+from Orders o
+join Customers c on c.CustomerID = o.CustomerID
+group by o.CustomerID, c.CompanyName;
+
+-- 2. Policz ile produktów ma każdy dostawca
+-- EN: Count the number of products for each supplier
+select  
+    s.SupplierID,
+    s.CompanyName, 
+    count(p.ProductID) as CountOfProducts
+from Products p
+join Suppliers s on s.SupplierID = p.SupplierID
+group by s.SupplierID, s.CompanyName;
+
+-- 3. Oblicz średnią cenę produktów w każdej kategorii
+-- EN: Calculate the average price of products in each category
+select 
+    c.CategoryName,
+    avg(p.UnitPrice) as AVGUnitPrice
+from Products p
+join Categories c on c.CategoryID = p.CategoryID
+group by c.CategoryName;
+
+-- 4. Znajdź klientów, którzy złożyli więcej niż 10 zamówień
+-- EN: Find customers who placed more than 10 orders
+select 
+    c.CustomerID, 
+    c.CompanyName, 
+    count(o.OrderID) as SumOrder
+from Orders o
+join Customers c on c.CustomerID = o.CustomerID
+group by c.CustomerID, c.CompanyName
+having count(o.OrderID) > 10;
+
+-- 5. Produkty, które nigdy nie zostały zamówione
 
 -- PL: Znajdź produkty, które nigdy nie zostały zamówione.
 -- EN: Find products that have never been ordered.
@@ -19,7 +59,7 @@ left join [Order Details] od on od.ProductID = p.ProductID
 group by p.ProductID
 having count(od.OrderID) = 0;
 
--- 2. Klienci z największą liczbą zamówień
+-- 6. Klienci z największą liczbą zamówień
 
 -- PL: Pokaż klientów, którzy złożyli największą liczbę zamówień.
 -- EN: Show customers who placed the highest number of orders.
@@ -32,7 +72,7 @@ left join Orders o on o.CustomerID = c.CustomerID
 group by c.CustomerID
 order by CountOfOrders desc;
 
--- 3. Dostawcy z produktami droższymi niż średnia
+-- 7. Dostawcy z produktami droższymi niż średnia
 
 -- PL: Znajdź dostawców, którzy dostarczają produkty droższe niż średnia cena wszystkich produktów.
 -- EN: Find suppliers who provide products more expensive than the average price of all products
@@ -50,7 +90,7 @@ having max(p.UnitPrice) > (select avg(UnitPrice) from Products)
 order by s.CompanyName;
 
 
--- 4. Drogie zamówienia
+-- 8. Drogie zamówienia
 
 -- PL: Wyświetl zamówienia, w których suma (Quantity * UnitPrice) przekracza 1000.
 -- EN: Display orders where the total value (Quantity * UnitPrice) exceeds 1000.

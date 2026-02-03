@@ -100,3 +100,54 @@ SELECT
     ) AS YoY_PriceFromSuppliersPercent -- PL: Przyrost procentowy rok do roku (PriceFromSuppliers), EN: YoY percentage for supplier price
 FROM CategoryYear
 ORDER BY CategoryName, OrderYear;
+
+-- =====================================================
+-- 5. Product Sales Year-over-Year (YoY) Comparison
+--
+-- PL: Znajdz wzrosty i spadki sprzedazy dla poszczegolnych produktow.
+--     Zapytanie pokazuje liczbe sprzedanych produktow w kazdym roku,
+--     sprzedaz z poprzedniego roku (LAG),
+--     roznice rok do roku (YoY_Difference)
+--     oraz procentowa zmiane rok do roku (YoY_Percent).
+--
+-- EN: Find year-over-year (YoY) increases and decreases in product sales.
+--     The query displays yearly sales per product,
+--     previous year sales (LAG),
+--     absolute YoY difference
+--     and percentage YoY change.
+-- =====================================================
+
+WITH ProductYearSales AS (
+    SELECT
+        YEAR(o.OrderDate) AS OrderYear,
+        p.ProductName,
+        COUNT(od.ProductID) AS SumOfBoughtProducts
+    FROM Orders o
+    LEFT JOIN [Order Details] od ON od.OrderID = o.OrderID
+    LEFT JOIN Products p ON p.ProductID = od.ProductID
+    GROUP BY YEAR(o.OrderDate), p.ProductName
+)
+SELECT
+    OrderYear,
+    ProductName,
+    SumOfBoughtProducts,
+    LAG(SumOfBoughtProducts) OVER (
+        PARTITION BY ProductName 
+        ORDER BY OrderYear
+    ) AS PreviousYearSumOfBoughtProducts,
+    -- roznica rok do roku
+    SumOfBoughtProducts 
+        - LAG(SumOfBoughtProducts) OVER (PARTITION BY ProductName ORDER BY OrderYear)
+        AS YoY_Difference,
+    -- procentowa zmiana rok do roku
+    ROUND(
+        CASE 
+            WHEN LAG(SumOfBoughtProducts) OVER (PARTITION BY ProductName ORDER BY OrderYear) IS NULL THEN NULL
+            ELSE 
+                (SumOfBoughtProducts - LAG(SumOfBoughtProducts) OVER (PARTITION BY ProductName ORDER BY OrderYear))
+                * 100.0 
+                / LAG(SumOfBoughtProducts) OVER (PARTITION BY ProductName ORDER BY OrderYear)
+        END, 2
+    ) AS YoY_Percent
+FROM ProductYearSales
+ORDER BY ProductName, OrderYear;

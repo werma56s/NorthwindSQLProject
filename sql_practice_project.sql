@@ -43,9 +43,7 @@ join Customers c on c.CustomerID = o.CustomerID
 group by c.CustomerID, c.CompanyName
 having count(o.OrderID) > 10;
 
--- 5. Produkty, które nigdy nie zostały zamówione
-
--- PL: Znajdź produkty, które nigdy nie zostały zamówione.
+-- 5. Znajdź produkty, które nigdy nie zostały zamówione.
 -- EN: Find products that have never been ordered.
 
 select p.ProductID, p.ProductName
@@ -59,9 +57,7 @@ left join [Order Details] od on od.ProductID = p.ProductID
 group by p.ProductID
 having count(od.OrderID) = 0;
 
--- 6. Klienci z największą liczbą zamówień
-
--- PL: Pokaż klientów, którzy złożyli największą liczbę zamówień.
+-- 6. Pokaż klientów, którzy złożyli największą liczbę zamówień.
 -- EN: Show customers who placed the highest number of orders.
 
 select top 3 
@@ -72,9 +68,7 @@ left join Orders o on o.CustomerID = c.CustomerID
 group by c.CustomerID
 order by CountOfOrders desc;
 
--- 7. Dostawcy z produktami droższymi niż średnia
-
--- PL: Znajdź dostawców, którzy dostarczają produkty droższe niż średnia cena wszystkich produktów.
+-- 7. Znajdź dostawców, którzy dostarczają produkty droższe niż średnia cena wszystkich produktów.
 -- EN: Find suppliers who provide products more expensive than the average price of all products
 select distinct s.SupplierID, s.CompanyName
 from Suppliers s
@@ -90,9 +84,7 @@ having max(p.UnitPrice) > (select avg(UnitPrice) from Products)
 order by s.CompanyName;
 
 
--- 8. Drogie zamówienia
-
--- PL: Wyświetl zamówienia, w których suma (Quantity * UnitPrice) przekracza 1000.
+-- 8. Wyświetl zamówienia, w których suma (Quantity * UnitPrice) przekracza 1000.
 -- EN: Display orders where the total value (Quantity * UnitPrice) exceeds 1000.
 
 select 

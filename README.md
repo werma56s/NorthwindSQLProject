@@ -61,9 +61,9 @@ Scripts used to create and load the database:
 
 ## 🚀 How to Run
 
-1. Install **SQL Server**  
+1. Install **SQL Server** and open SQL Server Management Studio (SSMS), version 20 
 2. Restore or run the Northwind database script (`instnwnd.sql`) and pubs (`instpubs.sql`).  
-3. Open the `.sql` file.  
+3. Open the `.sql` file.
 4. Run the queries section by section to explore results.  
 
 ---

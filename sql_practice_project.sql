@@ -11,7 +11,8 @@ select
     count(o.OrderID) as CountOfOrders
 from Orders o
 join Customers c on c.CustomerID = o.CustomerID
-group by o.CustomerID, c.CompanyName;
+group by o.CustomerID, c.CompanyName
+order by CountOfOrders desc;
 
 -- 2. Policz ile produktów ma każdy dostawca
 -- EN: Count the number of products for each supplier
@@ -21,7 +22,8 @@ select
     count(p.ProductID) as CountOfProducts
 from Products p
 join Suppliers s on s.SupplierID = p.SupplierID
-group by s.SupplierID, s.CompanyName;
+group by s.SupplierID, s.CompanyName
+order by CountOfProducts desc;
 
 -- 3. Oblicz średnią cenę produktów w każdej kategorii
 -- EN: Calculate the average price of products in each category
@@ -30,7 +32,8 @@ select
     avg(p.UnitPrice) as AVGUnitPrice
 from Products p
 join Categories c on c.CategoryID = p.CategoryID
-group by c.CategoryName;
+group by c.CategoryName
+order by AVGUnitPrice desc;
 
 -- 4. Znajdź klientów, którzy złożyli więcej niż 10 zamówień
 -- EN: Find customers who placed more than 10 orders
@@ -41,7 +44,8 @@ select
 from Orders o
 join Customers c on c.CustomerID = o.CustomerID
 group by c.CustomerID, c.CompanyName
-having count(o.OrderID) > 10;
+having count(o.OrderID) > 10
+order by SumOrder desc;
 
 -- 5. Znajdź produkty, które nigdy nie zostały zamówione.
 -- EN: Find products that have never been ordered.
@@ -55,7 +59,7 @@ select p.ProductID, count(od.OrderID) as OrderCount
 from Products p
 left join [Order Details] od on od.ProductID = p.ProductID
 group by p.ProductID
-having count(od.OrderID) = 0;
+having count(od.OrderID) = 0
 
 -- 6. Pokaż klientów, którzy złożyli największą liczbę zamówień.
 -- EN: Show customers who placed the highest number of orders.
@@ -93,5 +97,6 @@ select
 from Orders o 
 join [Order Details] od on od.OrderID = o.OrderID
 group by o.OrderID
-having sum(od.Quantity * od.UnitPrice) > 1000;
+having sum(od.Quantity * od.UnitPrice) > 1000
+order by SumOfOrder desc;
 

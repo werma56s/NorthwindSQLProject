@@ -32,7 +32,7 @@ The project uses the **[Northwind sample database](https://github.com/microsoft/
 - Order Details  
 
 Scripts used to create and load the database:
-- `instnwnd.sql` – Northwind database
+- `instnwnd (Azure SQL Database)` – Northwind database
 - `instpubs.sql` - Northwind pubs
 ---
 
